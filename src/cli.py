@@ -1,7 +1,8 @@
 import argparse
 import logging
+import coloredlogs
 from datetime import datetime
-from celery_tasks import (
+from src.celery_tasks import (
     initialize_brand, 
     update_brand_spend, 
     reset_daily_budgets,
@@ -18,6 +19,14 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger(__name__)
+
+# Configure colored logs for better readability
+coloredlogs.install(
+    level='INFO',
+    logger=logger,
+    fmt='%(asctime)s [%(levelname)s] %(name)s: %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 
 def main():
@@ -54,24 +63,39 @@ def main():
                 name, start_hour, end_hour = campaign_args
                 campaign_data[name] = (int(start_hour), int(end_hour))
         
+        logger.info(f"🚀 Initializing brand: {args.name}")
+        logger.info(f"  Monthly budget: ${args.monthly_budget}")
+        logger.info(f"  Daily budget: ${args.daily_budget}")
+        
+        if campaign_data:
+            logger.info(f"  Campaigns:")
+            for name, hours in campaign_data.items():
+                logger.info(f"    - {name}: {hours[0]}:00-{hours[1]}:00")
+        
         initialize_brand.delay(args.name, args.monthly_budget, args.daily_budget, campaign_data)
-        logger.info(f"Brand initialization task sent: {args.name}")
+        logger.info(f"✅ Brand initialization task sent")
     
     elif args.command == 'update-spend':
+        logger.info(f"💰 Updating spend for brand: {args.brand_name}")
+        logger.info(f"  Amount: ${args.amount}")
+        
         update_brand_spend.delay(args.brand_name, args.amount)
-        logger.info(f"Update spend task sent for {args.brand_name}: ${args.amount}")
+        logger.info(f"✅ Update spend task sent")
     
     elif args.command == 'reset-daily':
+        logger.info(f"🔄 Initiating daily budget reset")
         reset_daily_budgets.delay()
-        logger.info("Reset daily budgets task sent")
+        logger.info(f"✅ Reset daily budgets task sent")
     
     elif args.command == 'reset-monthly':
+        logger.info(f"🔄 Initiating monthly budget reset")
         reset_monthly_budgets.delay()
-        logger.info("Reset monthly budgets task sent")
+        logger.info(f"✅ Reset monthly budgets task sent")
     
     elif args.command == 'check-status':
+        logger.info(f"🔍 Initiating campaign status check")
         check_campaign_status.delay()
-        logger.info("Check campaign status task sent")
+        logger.info(f"✅ Check campaign status task sent")
     
     else:
         parser.print_help()
