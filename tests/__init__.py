@@ -1,1 +1,1 @@
-# This file is intentionally left blank.
+# This file allows the tests directory to be treated as a package
