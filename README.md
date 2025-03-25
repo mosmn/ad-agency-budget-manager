@@ -33,6 +33,61 @@ This application helps ad agencies manage their clients' ad campaigns by:
 - Python 3.8+
 - Redis (for Celery task queue)
 
+#### Installing and Managing Redis
+
+##### macOS
+Install Redis using Homebrew:
+```bash
+brew install redis
+```
+
+Start Redis server:
+```bash
+brew services start redis
+```
+
+Stop Redis server:
+```bash
+brew services stop redis
+```
+
+Check Redis status:
+```bash
+brew services list | grep redis
+```
+
+##### Windows
+1. Download the Redis Windows installer from [Redis Downloads](https://github.com/microsoftarchive/redis/releases)
+2. Run the installer (Redis-x64-xxx.msi)
+3. The installer will add Redis to Windows Services
+
+Manage Redis service using PowerShell:
+```powershell
+# Start Redis
+Start-Service Redis
+
+# Stop Redis
+Stop-Service Redis
+
+# Check Redis status
+Get-Service Redis
+```
+
+Alternative: Using command prompt:
+```cmd
+# Start Redis
+net start Redis
+
+# Stop Redis
+net stop Redis
+```
+
+Test Redis connection (both OS):
+```bash
+redis-cli ping
+# Should return PONG
+```
+
 ### Installation
 
 1. Clone the repository

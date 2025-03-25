@@ -40,6 +40,11 @@ app.conf.update(
     result_serializer='json',
     timezone='UTC',
     enable_utc=True,
+    # Add retry settings
+    broker_connection_retry=True,
+    broker_connection_retry_on_startup=True,
+    broker_connection_max_retries=None,  # Retry forever
+    broker_connection_timeout=30,  # Increase timeout to 30 seconds
 )
 
 # Store brands (in a real app this would be in a database)
