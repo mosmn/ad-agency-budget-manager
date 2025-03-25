@@ -2,7 +2,13 @@ import argparse
 import logging
 import coloredlogs
 from datetime import datetime
-from celery_tasks import (
+import sys
+import os
+
+# Add the src directory to the path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from src.celery_tasks import (
     initialize_brand, 
     update_brand_spend, 
     reset_daily_budgets,

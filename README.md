@@ -188,13 +188,6 @@ pytest --cov=src tests/
 pytest tests/test_brand.py
 ```
 
-The test suite has been designed to cover all key functionality including:
-- Brand and Campaign model behavior
-- Budget management
-- Campaign activation and deactivation based on time and budget constraints
-- Celery task functionality
-- CLI command processing
-
 ## Assumptions and Simplifications
 
 - In-memory storage is used for brands and campaigns (a real system would use a database)

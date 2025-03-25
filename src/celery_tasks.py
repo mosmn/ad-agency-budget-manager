@@ -106,7 +106,7 @@ def reset_daily_budgets():
     logger.info(f"🔄 Resetting daily budgets for all brands")
     
     for brand_name, brand in brands.items():
-        logger.info(f"  - {brand_name}: ${brand.current_daily_spend} → $0")
+        logger.info(f"  - {brand_name}: Current spend ${brand.current_daily_spend} → $0 (Daily limit: ${brand.daily_budget})")
         brand.reset_daily_budget()
     
     logger.info(f"✅ Daily budget reset completed for {len(brands)} brands")
@@ -119,7 +119,7 @@ def reset_monthly_budgets():
     logger.info(f"🔄 Resetting monthly budgets for all brands")
     
     for brand_name, brand in brands.items():
-        logger.info(f"  - {brand_name}: ${brand.current_monthly_spend} → $0")
+        logger.info(f"  - {brand_name}: Current spend ${brand.current_monthly_spend} → $0 (Monthly limit: ${brand.monthly_budget})")
         brand.reset_monthly_budget()
     
     logger.info(f"✅ Monthly budget reset completed for {len(brands)} brands")
