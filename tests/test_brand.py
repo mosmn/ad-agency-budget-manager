@@ -1,5 +1,6 @@
 import unittest
-from src.main import Brand, Campaign
+from src.models.brand import Brand
+from src.models.campaign import Campaign
 
 class TestBrand(unittest.TestCase):
     def setUp(self):

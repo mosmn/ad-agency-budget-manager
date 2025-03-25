@@ -1,28 +1,14 @@
 class CampaignService:
-    def __init__(self):
-        self.campaigns = []
+    def __init__(self, brand):
+        self.brand = brand
 
-    def add_campaign(self, campaign):
-        self.campaigns.append(campaign)
-
-    def activate_campaign(self, campaign):
-        if self.is_within_dayparting(campaign):
-            campaign.status = 'active'
-
-    def deactivate_campaign(self, campaign):
-        campaign.status = 'inactive'
-
-    def manage_campaigns(self):
-        for campaign in self.campaigns:
-            if campaign.is_budget_exceeded():
-                self.deactivate_campaign(campaign)
+    def activate_campaigns(self, current_time):
+        for campaign in self.brand.campaigns:
+            if campaign.is_within_dayparting(current_time) and not self.brand.check_daily_budget() and not self.brand.check_monthly_budget():
+                campaign.activate()
             else:
-                self.activate_campaign(campaign)
+                campaign.deactivate()
 
-    def is_within_dayparting(self, campaign):
-        current_time = self.get_current_time()
-        return campaign.start_hour <= current_time.hour < campaign.end_hour
-
-    def get_current_time(self):
-        from datetime import datetime
-        return datetime.now()
+    def deactivate_campaigns(self):
+        for campaign in self.brand.campaigns:
+            campaign.deactivate()

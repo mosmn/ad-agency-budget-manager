@@ -1,84 +1,16 @@
-class Brand:
-    def __init__(self, name, monthly_budget, daily_budget):
-        self.name = name
-        self.monthly_budget = monthly_budget
-        self.daily_budget = daily_budget
-        self.current_monthly_spend = 0
-        self.current_daily_spend = 0
-        self.campaigns = []
-
-    def add_campaign(self, campaign):
-        self.campaigns.append(campaign)
-
-    def check_monthly_budget(self):
-        return self.current_monthly_spend >= self.monthly_budget
-
-    def check_daily_budget(self):
-        return self.current_daily_spend >= self.daily_budget
-
-    def reset_daily_budget(self):
-        self.current_daily_spend = 0
-
-    def reset_monthly_budget(self):
-        self.current_monthly_spend = 0
-
-
-class Campaign:
-    def __init__(self, name, dayparting_hours):
-        self.name = name
-        self.is_active = False
-        self.dayparting_hours = dayparting_hours
-
-    def activate(self):
-        self.is_active = True
-
-    def deactivate(self):
-        self.is_active = False
-
-    def is_within_dayparting(self, current_time):
-        start_hour, end_hour = self.dayparting_hours
-        return start_hour <= current_time.hour < end_hour
-
-
-class BudgetService:
-    def __init__(self, brand):
-        self.brand = brand
-
-    def update_daily_spend(self, amount):
-        self.brand.current_daily_spend += amount
-        if self.brand.check_daily_budget():
-            self.deactivate_campaigns()
-
-    def update_monthly_spend(self, amount):
-        self.brand.current_monthly_spend += amount
-        if self.brand.check_monthly_budget():
-            self.deactivate_campaigns()
-
-    def deactivate_campaigns(self):
-        for campaign in self.brand.campaigns:
-            campaign.deactivate()
-
-
-class CampaignService:
-    def __init__(self, brand):
-        self.brand = brand
-
-    def activate_campaigns(self, current_time):
-        for campaign in self.brand.campaigns:
-            if campaign.is_within_dayparting(current_time) and not self.brand.check_daily_budget() and not self.brand.check_monthly_budget():
-                campaign.activate()
-            else:
-                campaign.deactivate()
-
-    def deactivate_campaigns(self):
-        for campaign in self.brand.campaigns:
-            campaign.deactivate()
-
-
 import logging
 import argparse
 from datetime import datetime, time
 import coloredlogs
+import sys
+import os
+
+# Add the src directory to the path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from src.models.brand import Brand
+from src.models.campaign import Campaign
+from src.services.budget_service import BudgetService
+from src.services.campaign_service import CampaignService
 
 # Configure logging
 logging.basicConfig(

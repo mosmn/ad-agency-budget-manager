@@ -1,5 +1,7 @@
 import unittest
-from src.main import Brand, Campaign, BudgetService
+from src.models.brand import Brand
+from src.models.campaign import Campaign
+from src.services.budget_service import BudgetService
 
 class TestBudgetService(unittest.TestCase):
     def setUp(self):

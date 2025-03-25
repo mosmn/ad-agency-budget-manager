@@ -1,1 +1,1 @@
-# This file allows the src directory to be treated as a package
+# This file is intentionally left empty to make the directory a Python package

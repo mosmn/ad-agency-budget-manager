@@ -1,6 +1,14 @@
 from celery import Celery
 from datetime import datetime
-from src.main import Brand, Campaign, BudgetService, CampaignService
+import sys
+import os
+
+# Add the src directory to the path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from src.models.brand import Brand
+from src.models.campaign import Campaign
+from src.services.budget_service import BudgetService
+from src.services.campaign_service import CampaignService
 import logging
 import coloredlogs
 

@@ -1,7 +1,10 @@
 import unittest
 from unittest.mock import patch
 from datetime import datetime
-from src.main import Brand, Campaign, CampaignService
+from src.models.brand import Brand
+from src.models.campaign import Campaign
+from src.services.campaign_service import CampaignService
+
 
 class TestCampaignService(unittest.TestCase):
     def setUp(self):

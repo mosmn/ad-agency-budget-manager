@@ -5,32 +5,19 @@ class Brand:
         self.daily_budget = daily_budget
         self.current_monthly_spend = 0
         self.current_daily_spend = 0
-        self.is_active = True
+        self.campaigns = []
 
-    def check_daily_budget_exceeded(self):
-        return self.current_daily_spend >= self.daily_budget
+    def add_campaign(self, campaign):
+        self.campaigns.append(campaign)
 
-    def check_monthly_budget_exceeded(self):
+    def check_monthly_budget(self):
         return self.current_monthly_spend >= self.monthly_budget
+
+    def check_daily_budget(self):
+        return self.current_daily_spend >= self.daily_budget
 
     def reset_daily_budget(self):
         self.current_daily_spend = 0
 
     def reset_monthly_budget(self):
         self.current_monthly_spend = 0
-
-    def add_daily_spend(self, amount):
-        self.current_daily_spend += amount
-        if self.check_daily_budget_exceeded():
-            self.is_active = False
-
-    def add_monthly_spend(self, amount):
-        self.current_monthly_spend += amount
-        if self.check_monthly_budget_exceeded():
-            self.is_active = False
-
-    def activate(self):
-        self.is_active = True
-
-    def deactivate(self):
-        self.is_active = False

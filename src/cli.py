@@ -2,7 +2,7 @@ import argparse
 import logging
 import coloredlogs
 from datetime import datetime
-from src.celery_tasks import (
+from celery_tasks import (
     initialize_brand, 
     update_brand_spend, 
     reset_daily_budgets,

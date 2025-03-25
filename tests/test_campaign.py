@@ -1,6 +1,6 @@
 import unittest
 from datetime import datetime
-from src.main import Campaign
+from src.models.campaign import Campaign
 
 class TestCampaign(unittest.TestCase):
     def setUp(self):
